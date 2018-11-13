@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 second" debug="false">
+	<property name="APP_NAME" value="btc123-app"/>
+	<contextName>${APP_NAME}</contextName>
+	<!--<include resource="org/springframework/boot/logging/logback/base.xml"/>-->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{35} - %msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+	<appender name="RollingFileAppender"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>/tmp/logs/${APP_NAME}.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{35} - %msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<root level="info">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="RollingFileAppender" />
+	</root>
+	<!-- <logger name="org.springframework.web" level="debug" /> -->
+	<springProfile name="test,dev">
+		<logger name="com.btc123.app.mapper" level="DEBUG"/>
+		<logger name="org.springframework.web" level="info" />
+	</springProfile>
+	<springProfile name="prod">
+		<logger name="org.springframework.web" level="info" />
+	</springProfile>
+</configuration>

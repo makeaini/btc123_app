@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.btc123.app.mapper.UserMarketMapper" >
+  <resultMap id="BaseResultMap" type="com.btc123.app.entity.UserMarket" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="symbol" property="symbol" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, symbol, sort
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from btc123_user_market
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from btc123_user_market
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.btc123.app.entity.UserMarket" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into btc123_user_market (user_id, symbol, sort
+      )
+    values (#{userId,jdbcType=BIGINT}, #{symbol,jdbcType=VARCHAR}, #{sort,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.btc123.app.entity.UserMarket" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into btc123_user_market
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="symbol != null" >
+        symbol,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="symbol != null" >
+        #{symbol,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.btc123.app.entity.UserMarket" >
+    update btc123_user_market
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="symbol != null" >
+        symbol = #{symbol,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.btc123.app.entity.UserMarket" >
+    update btc123_user_market
+    set user_id = #{userId,jdbcType=BIGINT},
+      symbol = #{symbol,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <delete id="deleteUserMarket" parameterType="com.btc123.app.entity.UserMarket" >
+    delete from btc123_user_market
+    where symbol = #{symbol,jdbcType=VARCHAR}
+    and user_id = #{userId,jdbcType=BIGINT}
+  </delete>
+
+  <select id="selectByUserId" resultType="java.lang.String">
+    select
+    symbol
+    from btc123_user_market
+    where user_id = #{userId,jdbcType=BIGINT}
+    order by gmt_create LIMIT #{pageBegin},#{pageSize}
+  </select>
+
+  <select id="isUserMarket" resultMap="BaseResultMap" parameterType="com.btc123.app.entity.UserMarket" >
+    select
+    symbol
+    from btc123_user_market
+    where user_id = #{userId,jdbcType=BIGINT} and symbol = #{symbol,jdbcType=VARCHAR}
+  </select>
+
+</mapper>

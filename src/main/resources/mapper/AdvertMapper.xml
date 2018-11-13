@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.btc123.app.mapper.AdvertMapper" >
+  <resultMap id="BaseResultMap" type="com.btc123.app.entity.Advert" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="pic_url" property="picUrl" jdbcType="VARCHAR" />
+    <result column="source_id" property="sourceId" jdbcType="BIGINT" />
+    <result column="display_status" property="displayStatus" jdbcType="TINYINT" />
+    <result column="sort_order" property="sortOrder" jdbcType="BIGINT" />
+    <result column="position_id" property="positionId" jdbcType="BIGINT" />
+    <result column="creator_id" property="creatorId" jdbcType="BIGINT" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="advert_type" property="advertType" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, gmt_create, gmt_modified, title, pic_url, source_id, display_status, sort_order, 
+    position_id, creator_id, url, advert_type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from btc123_advert
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from btc123_advert
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.btc123.app.entity.Advert" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into btc123_advert (gmt_create, gmt_modified, title, 
+      pic_url, source_id, display_status, 
+      sort_order, position_id, creator_id, 
+      url, advert_type)
+    values (#{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{title,jdbcType=VARCHAR}, 
+      #{picUrl,jdbcType=VARCHAR}, #{sourceId,jdbcType=BIGINT}, #{displayStatus,jdbcType=TINYINT}, 
+      #{sortOrder,jdbcType=BIGINT}, #{positionId,jdbcType=BIGINT}, #{creatorId,jdbcType=BIGINT}, 
+      #{url,jdbcType=VARCHAR}, #{advertType,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.btc123.app.entity.Advert" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into btc123_advert
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="picUrl != null" >
+        pic_url,
+      </if>
+      <if test="sourceId != null" >
+        source_id,
+      </if>
+      <if test="displayStatus != null" >
+        display_status,
+      </if>
+      <if test="sortOrder != null" >
+        sort_order,
+      </if>
+      <if test="positionId != null" >
+        position_id,
+      </if>
+      <if test="creatorId != null" >
+        creator_id,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="advertType != null" >
+        advert_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="picUrl != null" >
+        #{picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceId != null" >
+        #{sourceId,jdbcType=BIGINT},
+      </if>
+      <if test="displayStatus != null" >
+        #{displayStatus,jdbcType=TINYINT},
+      </if>
+      <if test="sortOrder != null" >
+        #{sortOrder,jdbcType=BIGINT},
+      </if>
+      <if test="positionId != null" >
+        #{positionId,jdbcType=BIGINT},
+      </if>
+      <if test="creatorId != null" >
+        #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="advertType != null" >
+        #{advertType,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.btc123.app.entity.Advert" >
+    update btc123_advert
+    <set >
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="picUrl != null" >
+        pic_url = #{picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceId != null" >
+        source_id = #{sourceId,jdbcType=BIGINT},
+      </if>
+      <if test="displayStatus != null" >
+        display_status = #{displayStatus,jdbcType=TINYINT},
+      </if>
+      <if test="sortOrder != null" >
+        sort_order = #{sortOrder,jdbcType=BIGINT},
+      </if>
+      <if test="positionId != null" >
+        position_id = #{positionId,jdbcType=BIGINT},
+      </if>
+      <if test="creatorId != null" >
+        creator_id = #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="advertType != null" >
+        advert_type = #{advertType,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.btc123.app.entity.Advert" >
+    update btc123_advert
+    set gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      title = #{title,jdbcType=VARCHAR},
+      pic_url = #{picUrl,jdbcType=VARCHAR},
+      source_id = #{sourceId,jdbcType=BIGINT},
+      display_status = #{displayStatus,jdbcType=TINYINT},
+      sort_order = #{sortOrder,jdbcType=BIGINT},
+      position_id = #{positionId,jdbcType=BIGINT},
+      creator_id = #{creatorId,jdbcType=BIGINT},
+      url = #{url,jdbcType=VARCHAR},
+      advert_type = #{advertType,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="queryAdvertBySourceId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from btc123_advert
+    WHERE position_id = #{positionId,jdbcType=BIGINT}
+    AND display_status=1
+    order by sort_order
+  </select>
+
+</mapper>

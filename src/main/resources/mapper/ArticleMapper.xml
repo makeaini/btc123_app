@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.btc123.app.mapper.ArticleMapper">
+    <resultMap id="BaseResultMap" type="com.btc123.app.entity.Article">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP"/>
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="pic_url" property="picUrl" jdbcType="VARCHAR"/>
+        <result column="category_id" property="categoryId" jdbcType="BIGINT"/>
+        <result column="tag" property="tag" jdbcType="VARCHAR"/>
+        <result column="article_type" property="articleType" jdbcType="TINYINT"/>
+        <result column="display_status" property="displayStatus" jdbcType="TINYINT"/>
+        <result column="is_can_comment" property="isCanComment" jdbcType="BIT"/>
+        <result column="is_timing" property="isTiming" jdbcType="BIT"/>
+        <result column="timing_publish_time" property="timingPublishTime" jdbcType="TIMESTAMP"/>
+        <result column="creator_id" property="creatorId" jdbcType="BIGINT"/>
+        <result column="publish_status" property="publishStatus" jdbcType="TINYINT"/>
+        <result column="refuse_reason" property="refuseReason" jdbcType="VARCHAR"/>
+        <result column="sort_order" property="sortOrder" jdbcType="BIGINT"/>
+        <result column="is_front_publish" property="isFrontPublish" jdbcType="BIT"/>
+        <result column="browse_num" property="browseNum" jdbcType="BIGINT"/>
+        <result column="like_num" property="likeNum" jdbcType="BIGINT"/>
+        <result column="collect_num" property="collectNum" jdbcType="BIGINT"/>
+        <result column="source" property="source" jdbcType="VARCHAR"/>
+        <result column="source_link" property="sourceLink" jdbcType="VARCHAR"/>
+        <result column="weight" property="weight" jdbcType="DECIMAL"/>
+        <result column="auditor_id" property="auditorId" jdbcType="BIGINT"/>
+        <result column="audit_time" property="auditTime" jdbcType="TIMESTAMP"/>
+        <result column="modifier_id" property="modifierId" jdbcType="BIGINT"/>
+        <result column="is_prize" property="isPrize" jdbcType="BIT"/>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.btc123.app.entity.Article" extends="BaseResultMap">
+        <result column="summary" property="summary" jdbcType="LONGVARCHAR"/>
+        <result column="category_name" property="categoryName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs1" type="com.btc123.app.entity.Article" extends="ResultMapWithBLOBs">
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, gmt_create, gmt_modified, title, pic_url, category_id, tag, article_type, display_status,
+    is_can_comment, is_timing, timing_publish_time, creator_id, publish_status, refuse_reason, 
+    sort_order, is_front_publish, browse_num, like_num, collect_num, source, source_link, 
+    weight, auditor_id, audit_time, modifier_id, is_prize
+  </sql>
+    <sql id="Blob_Column_List">
+    summary
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from btc123_article
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from btc123_article
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.btc123.app.entity.Article">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into btc123_article (gmt_create, gmt_modified, title,
+        pic_url, category_id, tag,
+        article_type, display_status, is_can_comment,
+        is_timing, timing_publish_time, creator_id,
+        publish_status, refuse_reason, sort_order,
+        is_front_publish, browse_num, like_num,
+        collect_num, source, source_link,
+        weight, auditor_id, audit_time,
+        modifier_id, is_prize, summary
+        )
+        values (#{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{title,jdbcType=VARCHAR},
+        #{picUrl,jdbcType=VARCHAR}, #{categoryId,jdbcType=BIGINT}, #{tag,jdbcType=VARCHAR},
+        #{articleType,jdbcType=TINYINT}, #{displayStatus,jdbcType=TINYINT}, #{isCanComment,jdbcType=BIT},
+        #{isTiming,jdbcType=BIT}, #{timingPublishTime,jdbcType=TIMESTAMP}, #{creatorId,jdbcType=BIGINT},
+        #{publishStatus,jdbcType=TINYINT}, #{refuseReason,jdbcType=VARCHAR}, #{sortOrder,jdbcType=BIGINT},
+        #{isFrontPublish,jdbcType=BIT}, #{browseNum,jdbcType=BIGINT}, #{likeNum,jdbcType=BIGINT},
+        #{collectNum,jdbcType=BIGINT}, #{source,jdbcType=VARCHAR}, #{sourceLink,jdbcType=VARCHAR},
+        #{weight,jdbcType=DECIMAL}, #{auditorId,jdbcType=BIGINT}, #{auditTime,jdbcType=TIMESTAMP},
+        #{modifierId,jdbcType=BIGINT}, #{isPrize,jdbcType=BIT}, #{summary,jdbcType=LONGVARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.btc123.app.entity.Article">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into btc123_article
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="picUrl != null">
+                pic_url,
+            </if>
+            <if test="categoryId != null">
+                category_id,
+            </if>
+            <if test="tag != null">
+                tag,
+            </if>
+            <if test="articleType != null">
+                article_type,
+            </if>
+            <if test="displayStatus != null">
+                display_status,
+            </if>
+            <if test="isCanComment != null">
+                is_can_comment,
+            </if>
+            <if test="isTiming != null">
+                is_timing,
+            </if>
+            <if test="timingPublishTime != null">
+                timing_publish_time,
+            </if>
+            <if test="creatorId != null">
+                creator_id,
+            </if>
+            <if test="publishStatus != null">
+                publish_status,
+            </if>
+            <if test="refuseReason != null">
+                refuse_reason,
+            </if>
+            <if test="sortOrder != null">
+                sort_order,
+            </if>
+            <if test="isFrontPublish != null">
+                is_front_publish,
+            </if>
+            <if test="browseNum != null">
+                browse_num,
+            </if>
+            <if test="likeNum != null">
+                like_num,
+            </if>
+            <if test="collectNum != null">
+                collect_num,
+            </if>
+            <if test="source != null">
+                source,
+            </if>
+            <if test="sourceLink != null">
+                source_link,
+            </if>
+            <if test="weight != null">
+                weight,
+            </if>
+            <if test="auditorId != null">
+                auditor_id,
+            </if>
+            <if test="auditTime != null">
+                audit_time,
+            </if>
+            <if test="modifierId != null">
+                modifier_id,
+            </if>
+            <if test="isPrize != null">
+                is_prize,
+            </if>
+            <if test="summary != null">
+                summary,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="picUrl != null">
+                #{picUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="categoryId != null">
+                #{categoryId,jdbcType=BIGINT},
+            </if>
+            <if test="tag != null">
+                #{tag,jdbcType=VARCHAR},
+            </if>
+            <if test="articleType != null">
+                #{articleType,jdbcType=TINYINT},
+            </if>
+            <if test="displayStatus != null">
+                #{displayStatus,jdbcType=TINYINT},
+            </if>
+            <if test="isCanComment != null">
+                #{isCanComment,jdbcType=BIT},
+            </if>
+            <if test="isTiming != null">
+                #{isTiming,jdbcType=BIT},
+            </if>
+            <if test="timingPublishTime != null">
+                #{timingPublishTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creatorId != null">
+                #{creatorId,jdbcType=BIGINT},
+            </if>
+            <if test="publishStatus != null">
+                #{publishStatus,jdbcType=TINYINT},
+            </if>
+            <if test="refuseReason != null">
+                #{refuseReason,jdbcType=VARCHAR},
+            </if>
+            <if test="sortOrder != null">
+                #{sortOrder,jdbcType=BIGINT},
+            </if>
+            <if test="isFrontPublish != null">
+                #{isFrontPublish,jdbcType=BIT},
+            </if>
+            <if test="browseNum != null">
+                #{browseNum,jdbcType=BIGINT},
+            </if>
+            <if test="likeNum != null">
+                #{likeNum,jdbcType=BIGINT},
+            </if>
+            <if test="collectNum != null">
+                #{collectNum,jdbcType=BIGINT},
+            </if>
+            <if test="source != null">
+                #{source,jdbcType=VARCHAR},
+            </if>
+            <if test="sourceLink != null">
+                #{sourceLink,jdbcType=VARCHAR},
+            </if>
+            <if test="weight != null">
+                #{weight,jdbcType=DECIMAL},
+            </if>
+            <if test="auditorId != null">
+                #{auditorId,jdbcType=BIGINT},
+            </if>
+            <if test="auditTime != null">
+                #{auditTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifierId != null">
+                #{modifierId,jdbcType=BIGINT},
+            </if>
+            <if test="isPrize != null">
+                #{isPrize,jdbcType=BIT},
+            </if>
+            <if test="summary != null">
+                #{summary,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.btc123.app.entity.Article">
+        update btc123_article
+        <set>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="picUrl != null">
+                pic_url = #{picUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="categoryId != null">
+                category_id = #{categoryId,jdbcType=BIGINT},
+            </if>
+            <if test="tag != null">
+                tag = #{tag,jdbcType=VARCHAR},
+            </if>
+            <if test="articleType != null">
+                article_type = #{articleType,jdbcType=TINYINT},
+            </if>
+            <if test="displayStatus != null">
+                display_status = #{displayStatus,jdbcType=TINYINT},
+            </if>
+            <if test="isCanComment != null">
+                is_can_comment = #{isCanComment,jdbcType=BIT},
+            </if>
+            <if test="isTiming != null">
+                is_timing = #{isTiming,jdbcType=BIT},
+            </if>
+            <if test="timingPublishTime != null">
+                timing_publish_time = #{timingPublishTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creatorId != null">
+                creator_id = #{creatorId,jdbcType=BIGINT},
+            </if>
+            <if test="publishStatus != null">
+                publish_status = #{publishStatus,jdbcType=TINYINT},
+            </if>
+            <if test="refuseReason != null">
+                refuse_reason = #{refuseReason,jdbcType=VARCHAR},
+            </if>
+            <if test="sortOrder != null">
+                sort_order = #{sortOrder,jdbcType=BIGINT},
+            </if>
+            <if test="isFrontPublish != null">
+                is_front_publish = #{isFrontPublish,jdbcType=BIT},
+            </if>
+            <if test="browseNum != null">
+                browse_num = #{browseNum,jdbcType=BIGINT},
+            </if>
+            <if test="likeNum != null">
+                like_num = #{likeNum,jdbcType=BIGINT},
+            </if>
+            <if test="collectNum != null">
+                collect_num = #{collectNum,jdbcType=BIGINT},
+            </if>
+            <if test="source != null">
+                source = #{source,jdbcType=VARCHAR},
+            </if>
+            <if test="sourceLink != null">
+                source_link = #{sourceLink,jdbcType=VARCHAR},
+            </if>
+            <if test="weight != null">
+                weight = #{weight,jdbcType=DECIMAL},
+            </if>
+            <if test="auditorId != null">
+                auditor_id = #{auditorId,jdbcType=BIGINT},
+            </if>
+            <if test="auditTime != null">
+                audit_time = #{auditTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifierId != null">
+                modifier_id = #{modifierId,jdbcType=BIGINT},
+            </if>
+            <if test="isPrize != null">
+                is_prize = #{isPrize,jdbcType=BIT},
+            </if>
+            <if test="summary != null">
+                summary = #{summary,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.btc123.app.entity.Article">
+    update btc123_article
+    set gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      title = #{title,jdbcType=VARCHAR},
+      pic_url = #{picUrl,jdbcType=VARCHAR},
+      category_id = #{categoryId,jdbcType=BIGINT},
+      tag = #{tag,jdbcType=VARCHAR},
+      article_type = #{articleType,jdbcType=TINYINT},
+      display_status = #{displayStatus,jdbcType=TINYINT},
+      is_can_comment = #{isCanComment,jdbcType=BIT},
+      is_timing = #{isTiming,jdbcType=BIT},
+      timing_publish_time = #{timingPublishTime,jdbcType=TIMESTAMP},
+      creator_id = #{creatorId,jdbcType=BIGINT},
+      publish_status = #{publishStatus,jdbcType=TINYINT},
+      refuse_reason = #{refuseReason,jdbcType=VARCHAR},
+      sort_order = #{sortOrder,jdbcType=BIGINT},
+      is_front_publish = #{isFrontPublish,jdbcType=BIT},
+      browse_num = #{browseNum,jdbcType=BIGINT},
+      like_num = #{likeNum,jdbcType=BIGINT},
+      collect_num = #{collectNum,jdbcType=BIGINT},
+      source = #{source,jdbcType=VARCHAR},
+      source_link = #{sourceLink,jdbcType=VARCHAR},
+      weight = #{weight,jdbcType=DECIMAL},
+      auditor_id = #{auditorId,jdbcType=BIGINT},
+      audit_time = #{auditTime,jdbcType=TIMESTAMP},
+      modifier_id = #{modifierId,jdbcType=BIGINT},
+      is_prize = #{isPrize,jdbcType=BIT},
+      summary = #{summary,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <update id="updateByPrimaryKey" parameterType="com.btc123.app.entity.Article">
+    update btc123_article
+    set gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      title = #{title,jdbcType=VARCHAR},
+      pic_url = #{picUrl,jdbcType=VARCHAR},
+      category_id = #{categoryId,jdbcType=BIGINT},
+      tag = #{tag,jdbcType=VARCHAR},
+      article_type = #{articleType,jdbcType=TINYINT},
+      display_status = #{displayStatus,jdbcType=TINYINT},
+      is_can_comment = #{isCanComment,jdbcType=BIT},
+      is_timing = #{isTiming,jdbcType=BIT},
+      timing_publish_time = #{timingPublishTime,jdbcType=TIMESTAMP},
+      creator_id = #{creatorId,jdbcType=BIGINT},
+      publish_status = #{publishStatus,jdbcType=TINYINT},
+      refuse_reason = #{refuseReason,jdbcType=VARCHAR},
+      sort_order = #{sortOrder,jdbcType=BIGINT},
+      is_front_publish = #{isFrontPublish,jdbcType=BIT},
+      browse_num = #{browseNum,jdbcType=BIGINT},
+      like_num = #{likeNum,jdbcType=BIGINT},
+      collect_num = #{collectNum,jdbcType=BIGINT},
+      source = #{source,jdbcType=VARCHAR},
+      source_link = #{sourceLink,jdbcType=VARCHAR},
+      weight = #{weight,jdbcType=DECIMAL},
+      auditor_id = #{auditorId,jdbcType=BIGINT},
+      audit_time = #{auditTime,jdbcType=TIMESTAMP},
+      modifier_id = #{modifierId,jdbcType=BIGINT},
+      is_prize = #{isPrize,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <select id="queryArticle" resultMap="ResultMapWithBLOBs" parameterType="com.btc123.app.entity.Article">
+    select a.id, a.gmt_create, a.gmt_modified, a.title, a.pic_url, a.category_id, a.tag, a.article_type, a.display_status,
+    a.is_can_comment, a.is_timing, a.timing_publish_time, a.creator_id, a.publish_status, a.refuse_reason,
+    a.sort_order, a.is_front_publish,
+    (a.browse_num+(select count(ab.id) from btc123_article_browse_app ab where a.id=ab.article_id)) browse_num,
+    a.like_num, a.collect_num, a.source, a.source_link,
+    a.weight, a.auditor_id, a.audit_time, a.modifier_id, a.is_prize, a.summary,c.category_name
+    from btc123_article a  left join btc123_category c on
+    a.category_id=c.id
+    where a.publish_status=2 and a.display_status in (1,2) order by a.sort_order asc,a.gmt_modified desc
+  </select>
+
+    <select id="queryArticle1" resultMap="ResultMapWithBLOBs" parameterType="com.btc123.app.entity.Article">
+    select a.id, a.gmt_create, a.gmt_modified, a.title, a.pic_url, a.category_id, a.tag, a.article_type, a.display_status,
+    a.is_can_comment, a.is_timing, a.timing_publish_time, a.creator_id, a.publish_status, a.refuse_reason,
+    a.sort_order, a.is_front_publish,
+    (a.browse_num+(select count(ab.id) from btc123_article_browse_app ab where a.id=ab.article_id)) browse_num,
+    a.like_num, a.collect_num, a.source, a.source_link,
+    a.weight, a.auditor_id, a.audit_time, a.modifier_id, a.is_prize, a.summary,c.category_name
+    from btc123_article a  left join btc123_category c on
+    a.category_id=c.id
+    where a.category_id=#{categoryId} and a.publish_status=2 and a.display_status in (1,2) order by a.sort_order asc,a.gmt_modified desc
+  </select>
+
+    <select id="queryHeadlines" resultMap="ResultMapWithBLOBs">
+    select a.id, a.gmt_create, a.gmt_modified, a.title, a.pic_url, a.category_id, a.tag, a.article_type, a.display_status,
+    a.is_can_comment, a.is_timing, a.timing_publish_time, a.creator_id, a.publish_status, a.refuse_reason,
+    a.sort_order, a.is_front_publish,
+    (a.browse_num+(select count(ab.id) from btc123_article_browse_app ab where a.id=ab.article_id)) browse_num,
+    a.like_num, a.collect_num, a.source, a.source_link,
+    a.weight, a.auditor_id, a.audit_time, a.modifier_id, a.is_prize, a.summary,c.category_name
+    from btc123_article a  left join btc123_category c on
+    a.category_id=c.id
+    where a.publish_status=2 and a.display_status in (1,2) order by a.display_status desc,a.sort_order asc,a.gmt_modified desc
+  </select>
+
+    <select id="queryCollectArticleByUserId" resultMap="ResultMapWithBLOBs">
+        select a.id, a.gmt_create, a.gmt_modified, a.title, a.pic_url,
+        (a.browse_num+(select count(ab.id) from btc123_article_browse ab where a.id=ab.article_id)) browse_num,
+        c.category_name
+        from   btc123_article_collect ac
+        LEFT JOIN  btc123_article a  on ac.article_id = a.id
+        left join btc123_category c on a.category_id=c.id
+        where a.display_status in (1,2) and ac.user_id=#{userId} order by ac.gmt_create desc
+    </select>
+
+    <select id="queryCollectArticleByToken" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String">
+        select a.id, a.gmt_create, a.gmt_modified, a.title, a.pic_url,
+        (a.browse_num+(select count(ab.id) from btc123_article_browse_app ab where a.id=ab.article_id)) browse_num,
+        c.category_name
+        from   btc123_article_collect_app ac
+        LEFT JOIN  btc123_article a  on ac.article_id = a.id
+        left join btc123_category c on a.category_id=c.id
+        where a.display_status in (1,2) and ac.token=#{token} order by ac.gmt_create desc
+    </select>
+
+    <select id="selectByPrimaryKey1" resultMap="ResultMapWithBLOBs1" parameterType="java.lang.Long">
+        select
+        a.id,  a.gmt_create,  a.gmt_modified,  a.title,  a.pic_url,  a.category_id,  a.tag,  a.article_type,  a.display_status,
+        a.is_can_comment,  a.is_timing,  a.timing_publish_time,  a.creator_id,  a.publish_status,  a.refuse_reason,
+        a.sort_order,  a.is_front_publish,
+        (a.browse_num+(select count(al.id) from btc123_article_browse_app al where a.id=al.article_id)) browse_num,
+        (a.like_num+(select count(al.id) from btc123_article_like_app al where a.id=al.article_id)) like_num,
+        (a.collect_num+(select count(ac.id) from btc123_article_collect_app ac where a.id=ac.article_id)) collect_num,
+        a.source,  a.source_link,
+        a.weight,  a.auditor_id,  a.audit_time,  a.modifier_id,  a.is_prize
+        ,a.summary,b.content
+        from btc123_article a left join btc123_article_content b on a.id=b.article_id
+        where a.id = #{id,jdbcType=BIGINT}
+    </select>
+
+</mapper>

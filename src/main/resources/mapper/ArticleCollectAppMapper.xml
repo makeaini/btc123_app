@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.btc123.app.mapper.ArticleCollectAppMapper" >
+  <resultMap id="BaseResultMap" type="com.btc123.app.entity.ArticleCollectApp" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+    <result column="token" property="token" jdbcType="VARCHAR" />
+    <result column="article_id" property="articleId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, gmt_create, gmt_modified, token, article_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from btc123_article_collect_app
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from btc123_article_collect_app
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.btc123.app.entity.ArticleCollectApp" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into btc123_article_collect_app (gmt_create, gmt_modified, token, 
+      article_id)
+    values (#{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{token,jdbcType=VARCHAR}, 
+      #{articleId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.btc123.app.entity.ArticleCollectApp" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into btc123_article_collect_app
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+      <if test="token != null" >
+        token,
+      </if>
+      <if test="articleId != null" >
+        article_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="token != null" >
+        #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="articleId != null" >
+        #{articleId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.btc123.app.entity.ArticleCollectApp" >
+    update btc123_article_collect_app
+    <set >
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="token != null" >
+        token = #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="articleId != null" >
+        article_id = #{articleId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.btc123.app.entity.ArticleCollectApp" >
+    update btc123_article_collect_app
+    set gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      token = #{token,jdbcType=VARCHAR},
+      article_id = #{articleId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <delete id="deleteByTokenAndArticleId" parameterType="com.btc123.app.entity.ArticleCollectApp" >
+    delete from btc123_article_collect_app
+     where token = #{token,jdbcType=VARCHAR} and article_id = #{articleId,jdbcType=BIGINT}
+  </delete>
+
+    <select id="queryByTokenAndArticle" resultMap="BaseResultMap" parameterType="com.btc123.app.entity.ArticleCollectApp" >
+        select
+        <include refid="Base_Column_List" />
+        from btc123_article_collect_app
+        where token = #{token,jdbcType=VARCHAR} and article_id = #{articleId,jdbcType=BIGINT}
+    </select>
+
+</mapper>

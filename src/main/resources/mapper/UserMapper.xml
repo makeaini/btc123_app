@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.btc123.app.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.btc123.app.entity.User">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP"/>
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
+        <result column="nickname" property="nickname" jdbcType="VARCHAR"/>
+        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="lock_status" property="lockStatus" jdbcType="TINYINT"/>
+        <result column="avatar" property="avatar" jdbcType="VARCHAR"/>
+        <result column="lock_time" property="lockTime" jdbcType="TIMESTAMP"/>
+        <result column="area_id" property="areaId" jdbcType="BIGINT"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="summary" property="summary" jdbcType="VARCHAR"/>
+        <result column="country_code" property="countryCode" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, gmt_create, gmt_modified, nickname, mobile, password, lock_status, avatar, lock_time, 
+    area_id, email, summary,country_code
+  </sql>
+
+    <select id="findUserByMobile" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from btc123_user
+        where mobile = #{mobile,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from btc123_user
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectPageList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from btc123_user
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from btc123_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.btc123.app.entity.User">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into btc123_user (gmt_create, gmt_modified, nickname,
+        mobile, password, lock_status,
+        avatar, lock_time, area_id,
+        email, summary,country_code)
+        values (#{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{nickname,jdbcType=VARCHAR},
+        #{mobile,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{lockStatus,jdbcType=TINYINT},
+        #{avatar,jdbcType=VARCHAR}, #{lockTime,jdbcType=TIMESTAMP}, #{areaId,jdbcType=BIGINT},
+        #{email,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR},#{countryCode,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.btc123.app.entity.User">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into btc123_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+            <if test="nickname != null">
+                nickname,
+            </if>
+            <if test="mobile != null">
+                mobile,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="lockStatus != null">
+                lock_status,
+            </if>
+            <if test="avatar != null">
+                avatar,
+            </if>
+            <if test="lockTime != null">
+                lock_time,
+            </if>
+            <if test="areaId != null">
+                area_id,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="summary != null">
+                summary,
+            </if>
+            <if test="countryCode != null">
+                country_code,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="nickname != null">
+                #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="lockStatus != null">
+                #{lockStatus,jdbcType=TINYINT},
+            </if>
+            <if test="avatar != null">
+                #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="lockTime != null">
+                #{lockTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="areaId != null">
+                #{areaId,jdbcType=BIGINT},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="summary != null">
+                #{summary,jdbcType=VARCHAR},
+            </if>
+            <if test="countryCode != null">
+                #{countryCode,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.btc123.app.entity.User">
+        update btc123_user
+        <set>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="nickname != null">
+                nickname = #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                mobile = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="lockStatus != null">
+                lock_status = #{lockStatus,jdbcType=TINYINT},
+            </if>
+            <if test="avatar != null">
+                avatar = #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="lockTime != null">
+                lock_time = #{lockTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="areaId != null">
+                area_id = #{areaId,jdbcType=BIGINT},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="summary != null">
+                summary = #{summary,jdbcType=VARCHAR},
+            </if>
+            <if test="countryCode != null">
+                country_code = #{countryCode,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.btc123.app.entity.User">
+    update btc123_user
+    set gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      nickname = #{nickname,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      lock_status = #{lockStatus,jdbcType=TINYINT},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      lock_time = #{lockTime,jdbcType=TIMESTAMP},
+      area_id = #{areaId,jdbcType=BIGINT},
+      email = #{email,jdbcType=VARCHAR},
+      summary = #{summary,jdbcType=VARCHAR},
+      country_code = #{countryCode,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

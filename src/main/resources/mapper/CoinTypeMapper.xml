@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.btc123.app.mapper.CoinTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.btc123.app.entity.CoinType" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="create_opr" property="createOpr" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="BIGINT" />
+    <result column="update_opr" property="updateOpr" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="cn_name" property="cnName" jdbcType="VARCHAR" />
+    <result column="download_url" property="downloadUrl" jdbcType="VARCHAR" />
+    <result column="en_name" property="enName" jdbcType="VARCHAR" />
+    <result column="issue_date" property="issueDate" jdbcType="TIMESTAMP" />
+    <result column="logo" property="logo" jdbcType="VARCHAR" />
+    <result column="sign" property="sign" jdbcType="VARCHAR" />
+    <result column="total_value" property="totalValue" jdbcType="VARCHAR" />
+    <result column="website" property="website" jdbcType="VARCHAR" />
+    <result column="whitebook_url" property="whitebookUrl" jdbcType="VARCHAR" />
+    <result column="show_position" property="showPosition" jdbcType="BIGINT" />
+    <result column="is_add" property="isAdd" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.btc123.app.entity.CoinType" extends="BaseResultMap" >
+    <result column="summary" property="summary" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, create_opr, create_time, remark, status, update_opr, update_time, cn_name, download_url, 
+    en_name, issue_date, logo, sign, total_value, website, whitebook_url, show_position, 
+    is_add
+  </sql>
+  <sql id="Blob_Column_List" >
+    summary
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from btc123_coin_type
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from btc123_coin_type
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.btc123.app.entity.CoinType" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into btc123_coin_type (create_opr, create_time, remark, 
+      status, update_opr, update_time, 
+      cn_name, download_url, en_name, 
+      issue_date, logo, sign, 
+      total_value, website, whitebook_url, 
+      show_position, is_add, summary
+      )
+    values (#{createOpr,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, 
+      #{status,jdbcType=BIGINT}, #{updateOpr,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{cnName,jdbcType=VARCHAR}, #{downloadUrl,jdbcType=VARCHAR}, #{enName,jdbcType=VARCHAR}, 
+      #{issueDate,jdbcType=TIMESTAMP}, #{logo,jdbcType=VARCHAR}, #{sign,jdbcType=VARCHAR}, 
+      #{totalValue,jdbcType=VARCHAR}, #{website,jdbcType=VARCHAR}, #{whitebookUrl,jdbcType=VARCHAR}, 
+      #{showPosition,jdbcType=BIGINT}, #{isAdd,jdbcType=INTEGER}, #{summary,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.btc123.app.entity.CoinType" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into btc123_coin_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="createOpr != null" >
+        create_opr,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="updateOpr != null" >
+        update_opr,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="cnName != null" >
+        cn_name,
+      </if>
+      <if test="downloadUrl != null" >
+        download_url,
+      </if>
+      <if test="enName != null" >
+        en_name,
+      </if>
+      <if test="issueDate != null" >
+        issue_date,
+      </if>
+      <if test="logo != null" >
+        logo,
+      </if>
+      <if test="sign != null" >
+        sign,
+      </if>
+      <if test="totalValue != null" >
+        total_value,
+      </if>
+      <if test="website != null" >
+        website,
+      </if>
+      <if test="whitebookUrl != null" >
+        whitebook_url,
+      </if>
+      <if test="showPosition != null" >
+        show_position,
+      </if>
+      <if test="isAdd != null" >
+        is_add,
+      </if>
+      <if test="summary != null" >
+        summary,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="createOpr != null" >
+        #{createOpr,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=BIGINT},
+      </if>
+      <if test="updateOpr != null" >
+        #{updateOpr,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cnName != null" >
+        #{cnName,jdbcType=VARCHAR},
+      </if>
+      <if test="downloadUrl != null" >
+        #{downloadUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="enName != null" >
+        #{enName,jdbcType=VARCHAR},
+      </if>
+      <if test="issueDate != null" >
+        #{issueDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logo != null" >
+        #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="sign != null" >
+        #{sign,jdbcType=VARCHAR},
+      </if>
+      <if test="totalValue != null" >
+        #{totalValue,jdbcType=VARCHAR},
+      </if>
+      <if test="website != null" >
+        #{website,jdbcType=VARCHAR},
+      </if>
+      <if test="whitebookUrl != null" >
+        #{whitebookUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="showPosition != null" >
+        #{showPosition,jdbcType=BIGINT},
+      </if>
+      <if test="isAdd != null" >
+        #{isAdd,jdbcType=INTEGER},
+      </if>
+      <if test="summary != null" >
+        #{summary,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.btc123.app.entity.CoinType" >
+    update btc123_coin_type
+    <set >
+      <if test="createOpr != null" >
+        create_opr = #{createOpr,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=BIGINT},
+      </if>
+      <if test="updateOpr != null" >
+        update_opr = #{updateOpr,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cnName != null" >
+        cn_name = #{cnName,jdbcType=VARCHAR},
+      </if>
+      <if test="downloadUrl != null" >
+        download_url = #{downloadUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="enName != null" >
+        en_name = #{enName,jdbcType=VARCHAR},
+      </if>
+      <if test="issueDate != null" >
+        issue_date = #{issueDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logo != null" >
+        logo = #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="sign != null" >
+        sign = #{sign,jdbcType=VARCHAR},
+      </if>
+      <if test="totalValue != null" >
+        total_value = #{totalValue,jdbcType=VARCHAR},
+      </if>
+      <if test="website != null" >
+        website = #{website,jdbcType=VARCHAR},
+      </if>
+      <if test="whitebookUrl != null" >
+        whitebook_url = #{whitebookUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="showPosition != null" >
+        show_position = #{showPosition,jdbcType=BIGINT},
+      </if>
+      <if test="isAdd != null" >
+        is_add = #{isAdd,jdbcType=INTEGER},
+      </if>
+      <if test="summary != null" >
+        summary = #{summary,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.btc123.app.entity.CoinType" >
+    update btc123_coin_type
+    set create_opr = #{createOpr,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR},
+      status = #{status,jdbcType=BIGINT},
+      update_opr = #{updateOpr,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      cn_name = #{cnName,jdbcType=VARCHAR},
+      download_url = #{downloadUrl,jdbcType=VARCHAR},
+      en_name = #{enName,jdbcType=VARCHAR},
+      issue_date = #{issueDate,jdbcType=TIMESTAMP},
+      logo = #{logo,jdbcType=VARCHAR},
+      sign = #{sign,jdbcType=VARCHAR},
+      total_value = #{totalValue,jdbcType=VARCHAR},
+      website = #{website,jdbcType=VARCHAR},
+      whitebook_url = #{whitebookUrl,jdbcType=VARCHAR},
+      show_position = #{showPosition,jdbcType=BIGINT},
+      is_add = #{isAdd,jdbcType=INTEGER},
+      summary = #{summary,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.btc123.app.entity.CoinType" >
+    update btc123_coin_type
+    set create_opr = #{createOpr,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR},
+      status = #{status,jdbcType=BIGINT},
+      update_opr = #{updateOpr,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      cn_name = #{cnName,jdbcType=VARCHAR},
+      download_url = #{downloadUrl,jdbcType=VARCHAR},
+      en_name = #{enName,jdbcType=VARCHAR},
+      issue_date = #{issueDate,jdbcType=TIMESTAMP},
+      logo = #{logo,jdbcType=VARCHAR},
+      sign = #{sign,jdbcType=VARCHAR},
+      total_value = #{totalValue,jdbcType=VARCHAR},
+      website = #{website,jdbcType=VARCHAR},
+      whitebook_url = #{whitebookUrl,jdbcType=VARCHAR},
+      show_position = #{showPosition,jdbcType=BIGINT},
+      is_add = #{isAdd,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="searchMarket" resultType="java.lang.String" parameterType="java.lang.String" >
+    select
+    b.symbol
+    from btc123_coin_type a left join btc123_market_api_list b
+    on a.id=b.coin_type_id where a.sign
+    LIKE CONCAT(CONCAT('%',#{keyword,jdbcType=VARCHAR},'%'))
+  </select>
+
+  <select id="selectBySign" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from btc123_coin_type
+    where sign = #{sign,jdbcType=VARCHAR}
+  </select>
+
+
+  <select id="countTradeNum" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select count(distinct(b.plat_form_id))
+    from btc123_coin_type a left join btc123_market_api_list b on a.id=b.coin_type_id
+    where a.sign = #{sign,jdbcType=VARCHAR}
+  </select>
+
+</mapper>

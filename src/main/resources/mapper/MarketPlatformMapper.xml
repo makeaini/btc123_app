@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.btc123.app.mapper.MarketPlatformMapper" >
+  <resultMap id="BaseResultMap" type="com.btc123.app.entity.MarketPlatform" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="create_opr" property="createOpr" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="BIGINT" />
+    <result column="update_opr" property="updateOpr" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="country" property="country" jdbcType="VARCHAR" />
+    <result column="face_book_url" property="faceBookUrl" jdbcType="VARCHAR" />
+    <result column="logo" property="logo" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="setup_date" property="setupDate" jdbcType="TIMESTAMP" />
+    <result column="sign" property="sign" jdbcType="VARCHAR" />
+    <result column="tiwwter_url" property="tiwwterUrl" jdbcType="VARCHAR" />
+    <result column="weibo_url" property="weiboUrl" jdbcType="VARCHAR" />
+    <result column="website" property="website" jdbcType="VARCHAR" />
+    <result column="show_position" property="showPosition" jdbcType="BIGINT" />
+    <result column="stock" property="stock" jdbcType="BIGINT" />
+    <result column="futures" property="futures" jdbcType="BIGINT" />
+    <result column="lever" property="lever" jdbcType="BIGINT" />
+    <result column="lump_sum" property="lumpSum" jdbcType="DECIMAL" />
+    <result column="trans_pair" property="transPair" jdbcType="BIGINT" />
+    <result column="web_url" property="webUrl" jdbcType="VARCHAR" />
+    <result column="sort_order" property="sortOrder" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.btc123.app.entity.MarketPlatformWithBLOBs" extends="BaseResultMap" >
+    <result column="rates_directions" property="ratesDirections" jdbcType="LONGVARCHAR" />
+    <result column="summary" property="summary" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, create_opr, create_time, remark, status, update_opr, update_time, country, face_book_url, 
+    logo, name, setup_date, sign, tiwwter_url, weibo_url, website, show_position, stock, 
+    futures, lever, lump_sum, trans_pair, web_url, sort_order
+  </sql>
+  <sql id="Blob_Column_List" >
+    rates_directions, summary
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from btc123_market_platform
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from btc123_market_platform
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.btc123.app.entity.MarketPlatformWithBLOBs" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into btc123_market_platform (create_opr, create_time, remark, 
+      status, update_opr, update_time, 
+      country, face_book_url, logo, 
+      name, setup_date, sign, 
+      tiwwter_url, weibo_url, website, 
+      show_position, stock, futures, 
+      lever, lump_sum, trans_pair, 
+      web_url, sort_order, rates_directions, 
+      summary)
+    values (#{createOpr,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, 
+      #{status,jdbcType=BIGINT}, #{updateOpr,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{country,jdbcType=VARCHAR}, #{faceBookUrl,jdbcType=VARCHAR}, #{logo,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{setupDate,jdbcType=TIMESTAMP}, #{sign,jdbcType=VARCHAR}, 
+      #{tiwwterUrl,jdbcType=VARCHAR}, #{weiboUrl,jdbcType=VARCHAR}, #{website,jdbcType=VARCHAR}, 
+      #{showPosition,jdbcType=BIGINT}, #{stock,jdbcType=BIGINT}, #{futures,jdbcType=BIGINT}, 
+      #{lever,jdbcType=BIGINT}, #{lumpSum,jdbcType=DECIMAL}, #{transPair,jdbcType=BIGINT}, 
+      #{webUrl,jdbcType=VARCHAR}, #{sortOrder,jdbcType=INTEGER}, #{ratesDirections,jdbcType=LONGVARCHAR}, 
+      #{summary,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.btc123.app.entity.MarketPlatformWithBLOBs" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into btc123_market_platform
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="createOpr != null" >
+        create_opr,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="updateOpr != null" >
+        update_opr,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="country != null" >
+        country,
+      </if>
+      <if test="faceBookUrl != null" >
+        face_book_url,
+      </if>
+      <if test="logo != null" >
+        logo,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="setupDate != null" >
+        setup_date,
+      </if>
+      <if test="sign != null" >
+        sign,
+      </if>
+      <if test="tiwwterUrl != null" >
+        tiwwter_url,
+      </if>
+      <if test="weiboUrl != null" >
+        weibo_url,
+      </if>
+      <if test="website != null" >
+        website,
+      </if>
+      <if test="showPosition != null" >
+        show_position,
+      </if>
+      <if test="stock != null" >
+        stock,
+      </if>
+      <if test="futures != null" >
+        futures,
+      </if>
+      <if test="lever != null" >
+        lever,
+      </if>
+      <if test="lumpSum != null" >
+        lump_sum,
+      </if>
+      <if test="transPair != null" >
+        trans_pair,
+      </if>
+      <if test="webUrl != null" >
+        web_url,
+      </if>
+      <if test="sortOrder != null" >
+        sort_order,
+      </if>
+      <if test="ratesDirections != null" >
+        rates_directions,
+      </if>
+      <if test="summary != null" >
+        summary,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="createOpr != null" >
+        #{createOpr,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=BIGINT},
+      </if>
+      <if test="updateOpr != null" >
+        #{updateOpr,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="country != null" >
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="faceBookUrl != null" >
+        #{faceBookUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="logo != null" >
+        #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="setupDate != null" >
+        #{setupDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sign != null" >
+        #{sign,jdbcType=VARCHAR},
+      </if>
+      <if test="tiwwterUrl != null" >
+        #{tiwwterUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="weiboUrl != null" >
+        #{weiboUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="website != null" >
+        #{website,jdbcType=VARCHAR},
+      </if>
+      <if test="showPosition != null" >
+        #{showPosition,jdbcType=BIGINT},
+      </if>
+      <if test="stock != null" >
+        #{stock,jdbcType=BIGINT},
+      </if>
+      <if test="futures != null" >
+        #{futures,jdbcType=BIGINT},
+      </if>
+      <if test="lever != null" >
+        #{lever,jdbcType=BIGINT},
+      </if>
+      <if test="lumpSum != null" >
+        #{lumpSum,jdbcType=DECIMAL},
+      </if>
+      <if test="transPair != null" >
+        #{transPair,jdbcType=BIGINT},
+      </if>
+      <if test="webUrl != null" >
+        #{webUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="sortOrder != null" >
+        #{sortOrder,jdbcType=INTEGER},
+      </if>
+      <if test="ratesDirections != null" >
+        #{ratesDirections,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="summary != null" >
+        #{summary,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.btc123.app.entity.MarketPlatformWithBLOBs" >
+    update btc123_market_platform
+    <set >
+      <if test="createOpr != null" >
+        create_opr = #{createOpr,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=BIGINT},
+      </if>
+      <if test="updateOpr != null" >
+        update_opr = #{updateOpr,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="country != null" >
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="faceBookUrl != null" >
+        face_book_url = #{faceBookUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="logo != null" >
+        logo = #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="setupDate != null" >
+        setup_date = #{setupDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sign != null" >
+        sign = #{sign,jdbcType=VARCHAR},
+      </if>
+      <if test="tiwwterUrl != null" >
+        tiwwter_url = #{tiwwterUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="weiboUrl != null" >
+        weibo_url = #{weiboUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="website != null" >
+        website = #{website,jdbcType=VARCHAR},
+      </if>
+      <if test="showPosition != null" >
+        show_position = #{showPosition,jdbcType=BIGINT},
+      </if>
+      <if test="stock != null" >
+        stock = #{stock,jdbcType=BIGINT},
+      </if>
+      <if test="futures != null" >
+        futures = #{futures,jdbcType=BIGINT},
+      </if>
+      <if test="lever != null" >
+        lever = #{lever,jdbcType=BIGINT},
+      </if>
+      <if test="lumpSum != null" >
+        lump_sum = #{lumpSum,jdbcType=DECIMAL},
+      </if>
+      <if test="transPair != null" >
+        trans_pair = #{transPair,jdbcType=BIGINT},
+      </if>
+      <if test="webUrl != null" >
+        web_url = #{webUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="sortOrder != null" >
+        sort_order = #{sortOrder,jdbcType=INTEGER},
+      </if>
+      <if test="ratesDirections != null" >
+        rates_directions = #{ratesDirections,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="summary != null" >
+        summary = #{summary,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.btc123.app.entity.MarketPlatformWithBLOBs" >
+    update btc123_market_platform
+    set create_opr = #{createOpr,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR},
+      status = #{status,jdbcType=BIGINT},
+      update_opr = #{updateOpr,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      country = #{country,jdbcType=VARCHAR},
+      face_book_url = #{faceBookUrl,jdbcType=VARCHAR},
+      logo = #{logo,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      setup_date = #{setupDate,jdbcType=TIMESTAMP},
+      sign = #{sign,jdbcType=VARCHAR},
+      tiwwter_url = #{tiwwterUrl,jdbcType=VARCHAR},
+      weibo_url = #{weiboUrl,jdbcType=VARCHAR},
+      website = #{website,jdbcType=VARCHAR},
+      show_position = #{showPosition,jdbcType=BIGINT},
+      stock = #{stock,jdbcType=BIGINT},
+      futures = #{futures,jdbcType=BIGINT},
+      lever = #{lever,jdbcType=BIGINT},
+      lump_sum = #{lumpSum,jdbcType=DECIMAL},
+      trans_pair = #{transPair,jdbcType=BIGINT},
+      web_url = #{webUrl,jdbcType=VARCHAR},
+      sort_order = #{sortOrder,jdbcType=INTEGER},
+      rates_directions = #{ratesDirections,jdbcType=LONGVARCHAR},
+      summary = #{summary,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.btc123.app.entity.MarketPlatform" >
+    update btc123_market_platform
+    set create_opr = #{createOpr,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR},
+      status = #{status,jdbcType=BIGINT},
+      update_opr = #{updateOpr,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      country = #{country,jdbcType=VARCHAR},
+      face_book_url = #{faceBookUrl,jdbcType=VARCHAR},
+      logo = #{logo,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      setup_date = #{setupDate,jdbcType=TIMESTAMP},
+      sign = #{sign,jdbcType=VARCHAR},
+      tiwwter_url = #{tiwwterUrl,jdbcType=VARCHAR},
+      weibo_url = #{weiboUrl,jdbcType=VARCHAR},
+      website = #{website,jdbcType=VARCHAR},
+      show_position = #{showPosition,jdbcType=BIGINT},
+      stock = #{stock,jdbcType=BIGINT},
+      futures = #{futures,jdbcType=BIGINT},
+      lever = #{lever,jdbcType=BIGINT},
+      lump_sum = #{lumpSum,jdbcType=DECIMAL},
+      trans_pair = #{transPair,jdbcType=BIGINT},
+      web_url = #{webUrl,jdbcType=VARCHAR},
+      sort_order = #{sortOrder,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectAllPlatform" resultMap="ResultMapWithBLOBs">
+   select a.sign,a.name from btc123_market_platform a where a.status=1000
+  </select>
+
+  <select id="selectBySign" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from btc123_market_platform
+    where sign = #{sign,jdbcType=VARCHAR} and status=1000
+  </select>
+
+</mapper>

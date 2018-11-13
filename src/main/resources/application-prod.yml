@@ -1,0 +1,41 @@
+server:
+  port: 8012
+spring:
+  datasource:
+    druid:
+      url: jdbc:mysql://172.31.107.247:3306/btc123_db?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
+      username: sysjob
+      password: 6PkYcfsUe1P1!
+  mail:
+    host: smtp.163.com
+    username: btc123_kefu@163.com
+    password: btc123
+    port: 25
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          socketFactory:
+            port: 465
+            class: javax.net.ssl.SSLSocketFactory
+          ssl:
+            trust: smtp.163.com
+          connectiontimeout: 30000
+          timeout: 20000
+          writetimeout: 10000
+  data:
+    mongodb:
+      uri: mongodb://boshataizhi:OlwO5eTdvSxkYfHs9np6GThiRs85dU2z@172.31.108.6:27017,172.31.108.7:27017,172.31.108.8:27017/proddb
+  redis:
+    jedis:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1
+        min-idle: 0
+    host: 172.31.108.8
+    password: OlwO5eTdvSxkYfHs
+    port: 7001

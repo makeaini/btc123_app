@@ -1,0 +1,34 @@
+server:
+  port: 8081
+spring:
+  datasource:
+    druid:
+      url: jdbc:mysql://172.16.3.213:3306/testsocial?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
+      username: ray
+      password: 123.com
+  data:
+    mongodb:
+      uri: mongodb://47.75.50.154:27017/admin
+  redis:
+      timeout: 5000
+      cluster:
+          nodes: 172.16.3.210:7000,172.16.3.210:7001,172.16.3.210:7002,172.16.3.211:7003,172.16.3.211:7004,172.16.3.211:7005
+      pool:
+          max-active: 8
+          max-wait: -1
+          max-idle: 8
+          min-idle: 4
+  mail:
+    host: smtp.163.com
+    username: btc123_kefu@163.com
+    password: btc123
+    port: 25
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+jsondoc:
+  basePath: http://172.16.0.254:8080/

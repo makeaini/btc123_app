@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.btc123.app.mapper.FlashMapper" >
+  <resultMap id="BaseResultMap" type="com.btc123.app.entity.Flash" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+      <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="source_link" property="sourceLink" jdbcType="VARCHAR" />
+    <result column="source" property="source" jdbcType="VARCHAR" />
+    <result column="display_status" property="displayStatus" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id,title, gmt_create, gmt_modified, content, source_link, source, display_status
+  </sql>
+
+  <sql id="Base_Column_List1" >
+    id, title,gmt_create as gmt_modified, content, source_link, source, display_status
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from btc123_flash
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+    <select id="selectByPrimaryKey1" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select
+        <include refid="Base_Column_List1" />
+        from btc123_flash
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from btc123_flash
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.btc123.app.entity.Flash" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into btc123_flash (gmt_create, gmt_modified, content, 
+      source_link, source, display_status
+      )
+    values (#{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{content,jdbcType=VARCHAR}, 
+      #{sourceLink,jdbcType=VARCHAR}, #{source,jdbcType=VARCHAR}, #{displayStatus,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.btc123.app.entity.Flash" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into btc123_flash
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="sourceLink != null" >
+        source_link,
+      </if>
+      <if test="source != null" >
+        source,
+      </if>
+      <if test="displayStatus != null" >
+        display_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceLink != null" >
+        #{sourceLink,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="displayStatus != null" >
+        #{displayStatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.btc123.app.entity.Flash" >
+    update btc123_flash
+    <set >
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceLink != null" >
+        source_link = #{sourceLink,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        source = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="displayStatus != null" >
+        display_status = #{displayStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.btc123.app.entity.Flash" >
+    update btc123_flash
+    set gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=VARCHAR},
+      source_link = #{sourceLink,jdbcType=VARCHAR},
+      source = #{source,jdbcType=VARCHAR},
+      display_status = #{displayStatus,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="queryFlash" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List1" />
+    from btc123_flash where display_status=1
+    order by gmt_create desc
+  </select>
+
+</mapper>
